@@ -65,10 +65,8 @@
             </goals>
             <configuration>
               <release>9</release>
-              <buildDirectory>${project.build.directory}</buildDirectory>
+              <multiReleaseOutput>true</multiReleaseOutput>
               <compileSourceRoots>${project.basedir}/src/main/java9</compileSourceRoots>
-              <!-- we can output directly into the appropriate target directory; this works out nicely -->
-              <outputDirectory>${project.build.directory}/classes/META-INF/versions/9</outputDirectory>
             </configuration>
           </execution>
         </executions>
@@ -94,10 +92,8 @@
                 </goals>
                 <configuration>
                   <release>10</release>
-                  <buildDirectory>${project.build.directory}</buildDirectory>
+                  <multiReleaseOutput>true</multiReleaseOutput>
                   <compileSourceRoots>${project.basedir}/src/main/java10</compileSourceRoots>
-                  <!-- we can output directly into the appropriate target directory; this works out nicely -->
-                  <outputDirectory>${project.build.directory}/classes/META-INF/versions/10</outputDirectory>
                 </configuration>
               </execution>
             </executions>

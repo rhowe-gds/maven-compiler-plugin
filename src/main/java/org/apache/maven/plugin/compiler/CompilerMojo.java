@@ -313,7 +313,29 @@ public class CompilerMojo
         }
         else
         {
-            classpathElements = compilePath;
+            if ( multiReleaseOutput )
+            {
+                classpathElements = new ArrayList<>( compilePath.size() + 3 );
+                
+                File versionsFolder = new File( outputDirectory, "META-INF/versions" );
+                
+                // in reverse order
+                for ( int version = Integer.parseInt( getRelease() ) - 1; version >= 9 ; version-- )
+                {
+                    File versionSubFolder = new File( versionsFolder, String.valueOf( version ) );
+                    if ( versionSubFolder.exists() )
+                    {
+                        classpathElements.add( versionSubFolder.getAbsolutePath() );
+                    }
+                }
+
+                classpathElements.addAll( compilePath );
+            }
+            else
+            {
+                classpathElements = compilePath;
+            }
+            
             modulepathElements = Collections.emptyList();
         }
     }
@@ -321,7 +343,7 @@ public class CompilerMojo
     private List<File> getCompileClasspathElements( MavenProject project )
     {
         // 3 is outputFolder + 2 preserved for multirelease  
-        List<File> list = new ArrayList<File>( project.getArtifacts().size() + 3 );
+        List<File> list = new ArrayList<>( project.getArtifacts().size() + 3 );
 
         if ( multiReleaseOutput )
         {
